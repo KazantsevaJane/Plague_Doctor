@@ -6,6 +6,14 @@ namespace Plague_Doctor
 {
     public class Game1 : Game
     {
+        enum GameState
+        {
+            Menu,
+            Gameplay,
+            EndOfGame,
+        }
+
+        GameState state;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -34,7 +42,19 @@ namespace Plague_Doctor
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            base.Update(gameTime);
+            switch (state)
+            {
+                case GameState.Menu:
+                    UpdateMenu(gameTime);
+                    break;
+                case GameState.Gameplay:
+                    UpdateGameplay(gameTime);
+                    break;
+                case GameState.EndOfGame:
+                    UpdateEndOfGame(gameTime);
+                    break;
+            }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
