@@ -10,18 +10,21 @@ namespace Plague_Doctor
         {
             Menu,
             Gameplay,
-            EndOfGame,
+            EndOfGame
         }
 
         GameState state;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        static public int WindowWigth;
+        static public int WindowHeight;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            WindowWigth = Window.ClientBounds.Width;
+            WindowHeight = Window.ClientBounds.Height;
         }
 
         protected override void Initialize()
@@ -34,8 +37,10 @@ namespace Plague_Doctor
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            Player.PlayerStandSprite = Content.Load<Texture2D>("PlayerStand");
+            Houses.House2 = Content.Load<Texture2D>("House-2");
+            Houses.House3 = Content.Load<Texture2D>("House-3");
+            Houses.House4 = Content.Load<Texture2D>("House-4");
         }
 
         protected override void Update(GameTime gameTime)
@@ -45,17 +50,16 @@ namespace Plague_Doctor
             base.Update(gameTime);
             switch (state)
             {
-                case GameState.Menu:
-                    UpdateMenu(gameTime);
-                    break;
+                //case GameState.Menu:
+                //    UpdateMenu(gameTime);
+                //    break;
                 case GameState.Gameplay:
-                    UpdateGameplay(gameTime);
+                    GamePlay.UpDate();
                     break;
-                case GameState.EndOfGame:
-                    UpdateEndOfGame(gameTime);
-                    break;
+                //case GameState.EndOfGame:
+                //    UpdateEndOfGame(gameTime);
+                //    break;
             }
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -63,9 +67,9 @@ namespace Plague_Doctor
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            GamePlay.Draw(_spriteBatch);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }

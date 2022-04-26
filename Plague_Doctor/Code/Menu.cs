@@ -10,6 +10,9 @@ namespace Plague_Doctor
 {
     class Menu
     {
-
+        private void fvkdfv()
+        {
+            
+        }
     }
 }
