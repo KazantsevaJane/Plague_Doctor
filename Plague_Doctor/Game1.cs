@@ -13,11 +13,12 @@ namespace Plague_Doctor
             EndOfGame
         }
 
-        GameState state;
+        GameState state = GameState.Gameplay;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         static public int WindowWigth;
         static public int WindowHeight;
+        static public KeyboardState keyboardState;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -41,11 +42,13 @@ namespace Plague_Doctor
             Houses.House2 = Content.Load<Texture2D>("House-2");
             Houses.House3 = Content.Load<Texture2D>("House-3");
             Houses.House4 = Content.Load<Texture2D>("House-4");
+            Level1.Init(_spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            keyboardState = Keyboard.GetState();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
             switch (state)
@@ -69,6 +72,10 @@ namespace Plague_Doctor
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             GamePlay.Draw(_spriteBatch);
+            //_spriteBatch.Draw(Player.PlayerStandSprite, new Vector2(85, Game1.WindowHeight - Houses.House2.Height-Player.PlayerStandSprite.Height), Color.White);
+            //_spriteBatch.Draw(Houses.House2, new Vector2(0, Game1.WindowHeight - Houses.House2.Height), Color.White);
+            //_spriteBatch.Draw(Houses.House3, new Vector2(Houses.House2.Width, Game1.WindowHeight - Houses.House3.Height), Color.White);
+            //_spriteBatch.Draw(Houses.House4, new Vector2(0, Game1.WindowHeight - Houses.House4.Height), Color.White);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

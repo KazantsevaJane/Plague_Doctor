@@ -8,15 +8,31 @@ namespace Plague_Doctor
 {
     class Level1
     {
-        static public void Draw(SpriteBatch spriteBatch)
+        static List<Texture2D> HousesArray = new List<Texture2D>();
+        static Player player = new Player();
+        static Rectangle rect;
+        static public void Init(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Houses.House2, new Vector2(0, Game1.WindowHeight), Color.White);
-            spriteBatch.Draw(Player.PlayerStandSprite, new Vector2(85, Game1.WindowHeight - Houses.House2.Height), Color.White);
-            
-            //spriteBatch.Draw(Houses.House3, new Vector2(Houses.House2.Width, Game1.WindowHeight), Color.White);
-            //spriteBatch.Draw(Houses.House4, new Vector2(Houses.House3.Width + Houses.House2.Width, Game1.WindowHeight), Color.White);
+            HousesArray = new List<Texture2D> { Houses.House2, Houses.House3, Houses.House4 };
+            player.Init(spriteBatch, 0, Game1.WindowHeight - Houses.House2.Height - Player.PlayerStandSprite.Height);
+        }
+        static public void Draw(SpriteBatch spriteBatch)
+        { 
+            var x = 0;
+            foreach(var house in HousesArray)
+            {
+                var y = Game1.WindowHeight;
+                spriteBatch.Draw(house, new Vector2(x, y - house.Height), Color.White);
+                x += house.Width;
+            }
+            player.Draw(spriteBatch);
+            //spriteBatch.Draw(Houses.House2, new Vector2(0, Game1.WindowHeight - Houses.House2.Height), Color.White);
+            //spriteBatch.Draw(Houses.House3, new Vector2(Houses.House2.Width, Game1.WindowHeight - Houses.House3.Height), Color.White);
+            //spriteBatch.Draw(Houses.House4, new Vector2(Houses.House3.Width + Houses.House2.Width, Game1.WindowHeight), Color.White);            
         }
         static public void Update()
-        { }
+        {
+            player.Update();
+        }
     }
 }
